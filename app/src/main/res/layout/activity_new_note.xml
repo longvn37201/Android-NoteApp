@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container_new_note"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorDefaultNoteColor"
+    android:orientation="vertical"
+    tools:context=".activities.NewNoteActivity">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true">
+
+            <!--            back-->
+            <ImageView
+                android:id="@+id/img_back_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_back"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/img_delete_note"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:visibility="gone"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:src="@drawable/ic_delete"
+                app:layout_constraintEnd_toStartOf="@+id/img_done_note"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!--            save-->
+            <ImageView
+                android:id="@+id/img_done_note"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/ic_done"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <!--            image-->
+            <ImageView
+                android:id="@+id/img_pic_in_new_note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="10dp"
+                android:adjustViewBounds="true"
+                app:layout_constraintTop_toBottomOf="@+id/img_back_home" />
+
+            <ImageView
+                android:id="@+id/img_remove_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/background_delete"
+                android:padding="5dp"
+                android:src="@drawable/ic_delete"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@id/img_pic_in_new_note"
+                app:layout_constraintTop_toTopOf="@id/img_pic_in_new_note" />
+
+
+            <!--            title-->
+            <EditText
+                android:id="@+id/edt_title"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:background="@null"
+                android:fontFamily="@font/ubuntu_bold"
+                android:hint="Tiêu đề"
+                android:padding="15dp"
+                android:maxLength="80"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textColorHint="@color/colorTextHint"
+                android:textSize="20sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/img_pic_in_new_note" />
+
+            <!--            time stamp-->
+            <TextView
+                android:id="@+id/tv_date_time_in_new_note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:fontFamily="@font/ubuntu_regular"
+                android:paddingLeft="15dp"
+                android:text="Chỉnh sửa: 25-04-2000"
+                android:textColor="@color/colorIcons"
+                android:textSize="12sp"
+                app:layout_constraintTop_toBottomOf="@+id/edt_title" />
+
+
+            <!--            add link layout-->
+            <TextView
+                android:id="@+id/tv_web_url"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="50dp"
+                android:autoLink="web"
+                android:fontFamily="@font/ubuntu_regular"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:text="http://test"
+                android:textColor="@color/colorAccent"
+                android:textSize="14sp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/tv_date_time_in_new_note" />
+
+            <ImageView
+                android:id="@+id/img_remove_url"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_delete"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_web_url"
+                app:layout_constraintStart_toEndOf="@+id/tv_web_url"
+                app:layout_constraintTop_toTopOf="@+id/tv_web_url"
+                app:tint="@color/colorDelete" />
+
+
+            <!--            note content-->
+            <EditText
+                android:id="@+id/edt_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@null"
+                android:fontFamily="@font/ubuntu_regular"
+                android:hint="Nội dung"
+                android:inputType="textMultiLine"
+                android:padding="15dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/colorTextHint"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@+id/tv_web_url" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <include layout="@layout/layout_bottom_sheet" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

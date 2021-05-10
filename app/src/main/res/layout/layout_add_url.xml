@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_dialog"
+    android:layout_gravity="center"
+    android:layout_margin="10dp"
+    android:padding="10dp"
+    android:id="@+id/layout_add_link_container"
+    >
+
+    <ImageView
+        android:id="@+id/img_icon_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_quick_add_link"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Thêm URL"
+        app:layout_constraintStart_toEndOf="@id/img_icon_link"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/img_icon_link"
+        android:textColor="@color/white"
+        android:fontFamily="@font/ubuntu_regular"
+        android:layout_marginLeft="10dp"
+        android:textSize="18sp"
+
+        />
+
+    <EditText
+        android:id="@+id/edt_url_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        app:layout_constraintTop_toBottomOf="@id/img_icon_link"
+        android:hint="Nhập URL"
+        android:textColorHint="@color/colorTextHint"
+        android:textSize="15sp"
+        android:textColor="@color/white"
+        android:gravity="center_vertical"
+        android:background="@null"
+        android:padding="10dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_add_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/edt_url_input"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="THÊM"
+        android:textColor="@color/colorAccent"
+        android:padding="10dp"
+        android:textSize="18sp"
+        android:fontFamily="@font/ubuntu_medium"
+        />
+    <TextView
+        android:id="@+id/tv_cancel_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/edt_url_input"
+        app:layout_constraintEnd_toStartOf="@+id/tv_add_link"
+        android:text="HỦY"
+        android:textColor="@color/colorAccent"
+        android:padding="10dp"
+        android:textSize="18sp"
+        android:fontFamily="@font/ubuntu_medium"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
