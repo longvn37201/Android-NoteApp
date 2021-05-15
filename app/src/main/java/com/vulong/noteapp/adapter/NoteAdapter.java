@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> implements Filterable {
     private static final String TAG = "test";
-
+    public static final String RESET_STRING = "d*@!&#*!@#!@#@!#$..<}|";
 
 
     private ArrayList<Note> noteListFiltered;
@@ -39,9 +39,9 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> im
     }
 
     public void setNoteListSource(ArrayList<Note> noteList) {
-
         this.noteListSource = noteList;
     }
+
     public ArrayList<Note> getNoteListFiltered() {
         return noteListFiltered;
     }
@@ -72,8 +72,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> im
         });
 
 
-
-
     }
 
     @Override
@@ -88,19 +86,25 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> im
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 String charString = constraint.toString();
-                if (charString.trim().isEmpty()) {
+
+                if (charString.equals(RESET_STRING)) {
                     noteListFiltered = noteListSource;
                 } else {
-                    ArrayList<Note> filteredList = new ArrayList<>();
-                    for (Note note : noteListSource) {
-
-                        if (note.getTitle().toLowerCase().contains(charString.toLowerCase()) || note.getContent().contains(constraint)) {
-                            filteredList.add(note);
+                    if (charString.trim().isEmpty()) {
+                        noteListFiltered = new ArrayList<>();
+                    } else {
+                        ArrayList<Note> filteredList = new ArrayList<>();
+                        for (Note note : noteListSource) {
+                            if (note.getTitle().toLowerCase().contains(charString.toLowerCase()) ||
+                                    note.getContent().toLowerCase().contains(charString.toLowerCase())) {
+                                filteredList.add(note);
+                            }
                         }
-                    }
 
-                    noteListFiltered = filteredList;
+                        noteListFiltered = filteredList;
+                    }
                 }
+
 
                 FilterResults filterResults = new FilterResults();
                 filterResults.values = noteListFiltered;
@@ -147,8 +151,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> im
             }
         }
     }
-
-
 
 
 }

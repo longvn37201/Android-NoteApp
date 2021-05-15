@@ -7,8 +7,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context=".activities.MainActivity">
-
+    tools:context=".activities.MainActivity"
+    >
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
@@ -35,48 +35,70 @@
 <!--                android:id="@+id/layout_top"-->
 <!--                android:layout_width="match_parent"-->
 <!--                android:layout_height="wrap_content">-->
+            <LinearLayout
+                android:id="@+id/layout_top"
+                app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                >
                 <TextView
                     android:id="@+id/tv_name_app"
-                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
                     android:fontFamily="@font/ubuntu_bold"
                     android:text="@string/main_label"
-                    android:textAlignment="center"
                     android:textColor="@color/text"
-                    android:textSize="20sp" />
-<!--                <ImageView-->
-<!--                    android:id="@+id/img_option_menu"-->
-<!--                    android:layout_width="30dp"-->
-<!--                    android:layout_height="30dp"-->
-<!--                    android:src="@drawable/ic_three_dot"-->
-<!--                    app:layout_constraintTop_toTopOf="@+id/tv_name_app"-->
-<!--                    app:layout_constraintEnd_toEndOf="parent"-->
-<!--                    android:layout_marginRight="10dp"-->
-<!--                    />-->
+                    android:textSize="22sp"
+                    />
+                <ImageView
+                    android:id="@+id/img_icon_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_search"
+                    android:background="@drawable/background_search"
+                    android:padding="10dp"
+                    />
+
+            </LinearLayout>
+
 <!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_search_note"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/background_search"
+                android:visibility="gone"
                 android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/img_exit_search_layout"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_back"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
                 <EditText
                     android:id="@+id/edt_search_note"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/img_clear_text"
+                    app:layout_constraintStart_toEndOf="@+id/img_exit_search_layout"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginLeft="20dp"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:drawableLeft="@drawable/ic_search"
-                    android:drawablePadding="10dp"
                     android:fontFamily="@font/ubuntu_regular"
                     android:hint="@string/search_hint"
                     android:maxLength="80"
@@ -84,7 +106,6 @@
                     android:singleLine="true"
                     android:textColor="@color/text"
                     android:textColorHint="@color/colorTextHint"
-                    android:layout_marginRight="20dp"
                     />
 
 
@@ -159,18 +180,13 @@
         app:layout_constraintBottom_toTopOf="@id/layout_quick_action"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/layout_quick_action" />
-
-<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--        android:id="@+id/img_new_note"-->
-<!--        android:layout_marginEnd="20dp"-->
-<!--        app:layout_constraintBottom_toTopOf="@id/layout_quick_action"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/layout_quick_action"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="end|bottom"-->
-<!--        android:src="@drawable/ic_new_note"-->
-<!--        android:backgroundTint="@color/colorAccent"-->
-<!--        android:layout_margin="16dp" />-->
+    <TextView
+        android:id="@+id/test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Test"
+        android:visibility="gone"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

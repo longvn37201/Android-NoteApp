@@ -34,6 +34,7 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -61,8 +62,6 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity implements NoteAdapterListener {
 
     private static final int REQUEST_CODE_ADD_NOTE = 69;
-    private static final int REQUEST_CODE_SETTING = 234;
-
     private static final int REQUEST_CODE_UPDATE_NOTE = 966;
     private static final int REQUEST_CODE_SHOW_ALL_NOTE = 1231246;
     private static final int REQUEST_CODE_STORAGE_PERMISSION = 918237;
@@ -78,6 +77,8 @@ public class MainActivity extends AppCompatActivity implements NoteAdapterListen
     private ArrayList<Note> noteArrayList;
 
     private ImageView imgClearText;
+    private ImageView imgIconSearch;
+    private ImageView imgExitSearch;
     private EditText edtSearchNote;
     private ImageView imgNewNote;
     private ImageView imgQuickAddLink;
@@ -96,9 +97,21 @@ public class MainActivity extends AppCompatActivity implements NoteAdapterListen
         getNote(REQUEST_CODE_SHOW_ALL_NOTE);
 
         //new note click
-        imgNewNote.setOnClickListener(v ->
-                startActivityForResult(new Intent(this, NewNoteActivity.class),
-                        REQUEST_CODE_ADD_NOTE));
+        imgNewNote.setOnClickListener(v -> {
+//            startActivityForResult(new Intent(this, NewNoteActivity.class),
+//                    REQUEST_CODE_ADD_NOTE);
+            findViewById(R.id.test).setVisibility(View.VISIBLE);
+
+        });
+
+        imgNewNote.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                findViewById(R.id.test).setVisibility(View.GONE);
+
+            }
+        });
+
 
 
         //search note
@@ -117,12 +130,8 @@ public class MainActivity extends AppCompatActivity implements NoteAdapterListen
             public void afterTextChanged(Editable s) {
                 noteAdapter.getFilter().filter(s.toString().trim());
                 if (!s.toString().trim().isEmpty()) {
-                    imgNewNote.setVisibility(View.GONE);
-                    layoutQuickAction.setVisibility(View.GONE);
                     imgClearText.setVisibility(View.VISIBLE);
                 } else {
-                    imgNewNote.setVisibility(View.VISIBLE);
-                    layoutQuickAction.setVisibility(View.VISIBLE);
                     imgClearText.setVisibility(View.INVISIBLE);
                 }
             }
@@ -159,12 +168,49 @@ public class MainActivity extends AppCompatActivity implements NoteAdapterListen
             }
         });
 
+        //icon search
+        imgIconSearch.setOnClickListener(v -> {
+            findViewById(R.id.layout_search_note).setVisibility(View.VISIBLE);
+            //focus
+            edtSearchNote.requestFocus();
+            //show keyboard
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(edtSearchNote, InputMethodManager.SHOW_IMPLICIT);
+
+            //hide top layout
+            findViewById(R.id.layout_top).setVisibility(View.GONE);
+            //hide layout quick actione
+            layoutQuickAction.setVisibility(View.GONE);
+            //hide icon new note
+            imgNewNote.setVisibility(View.GONE);
+            //hide filter with ""
+            noteAdapter.getFilter().filter("");
+
+
+        });
+
+        //exit search icon
+        imgExitSearch.setOnClickListener(v -> {
+            edtSearchNote.setText("");
+            edtSearchNote.clearFocus();
+            findViewById(R.id.layout_search_note).setVisibility(View.GONE);
+            findViewById(R.id.layout_top).setVisibility(View.VISIBLE);
+            layoutQuickAction.setVisibility(View.VISIBLE);
+            imgNewNote.setVisibility(View.VISIBLE);
+
+            noteAdapter.getFilter().filter(NoteAdapter.RESET_STRING);
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
+        });
+
+
     }
 
 
     private void initFields() {
 
-//        imgOpenMenu = findViewById(R.id.img_option_menu);
+        imgExitSearch = findViewById(R.id.img_exit_search_layout);
+        imgIconSearch = findViewById(R.id.img_icon_search);
         imgQuickAddImage = findViewById(R.id.img_quick_add_image);
         imgQuickAddLink = findViewById(R.id.img_quick_add_link);
         imgClearText = findViewById(R.id.img_clear_text);
@@ -215,7 +261,7 @@ public class MainActivity extends AppCompatActivity implements NoteAdapterListen
                 }
 
                 if (reqCode == REQUEST_CODE_UPDATE_NOTE) {
-                    if (edtSearchNote.getText().toString().trim().isEmpty()) {
+                    if (findViewById(R.id.layout_search_note).getVisibility() == View.GONE) {
                         noteArrayList.remove(noteClickedPos);
                         noteArrayList.add(noteClickedPos, notes.get(noteClickedPos));
                         noteAdapter.notifyItemChanged(noteClickedPos);
@@ -359,7 +405,6 @@ public class MainActivity extends AppCompatActivity implements NoteAdapterListen
 
         return picturePath;
     }
-
 
 
 }
