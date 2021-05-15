@@ -8,7 +8,7 @@
     android:paddingBottom="20dp"
     android:orientation="vertical"
     app:layout_scrollFlags="scroll|enterAlways"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorBackground"
     >
 
     <LinearLayout
@@ -23,19 +23,19 @@
 
         <TextView
             android:id="@+id/tv_name_app"
+            android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:fontFamily="@font/ubuntu_bold"
             android:text="@string/main_label"
             android:textColor="@color/text"
-            android:textSize="22sp" />
+            android:textSize="30sp" />
 
         <ImageView
             android:id="@+id/img_icon_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_search"
+            android:background="@drawable/background_search_oval"
             android:padding="10dp"
             android:src="@drawable/ic_search" />
 
@@ -49,8 +49,10 @@
         android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:background="@drawable/background_search"
+        android:background="@drawable/background_search_rectangle"
         android:padding="10dp"
+        android:clickable="true"
+        android:focusable="true"
         android:visibility="gone"
         >
 
@@ -67,7 +69,8 @@
             android:id="@+id/edt_search_note"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="10dp"
             android:background="@null"
             android:fontFamily="@font/ubuntu_regular"
             android:hint="@string/search_hint"
@@ -78,6 +81,7 @@
             android:textColorHint="@color/colorTextHint"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/img_exit_search_layout"
+            app:layout_constraintEnd_toStartOf="@id/img_clear_text"
             app:layout_constraintTop_toTopOf="parent" />
 
 

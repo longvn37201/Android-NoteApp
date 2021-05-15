@@ -23,8 +23,8 @@
                 android:id="@+id/img_back_home"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
                 android:src="@drawable/ic_back"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -34,7 +34,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:visibility="gone"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginRight="30dp"
                 android:src="@drawable/ic_delete"
                 app:layout_constraintEnd_toStartOf="@+id/img_done_note"
@@ -45,9 +45,10 @@
                 android:id="@+id/img_done_note"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="30dp"
                 android:src="@drawable/ic_done"
+                android:background="@drawable/background_save_note"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -66,14 +67,14 @@
 
             <ImageView
                 android:id="@+id/img_remove_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
-                android:background="@drawable/background_delete"
                 android:padding="5dp"
-                android:src="@drawable/ic_delete"
                 android:visibility="gone"
+                android:background="@drawable/background_delete"
+                android:src="@drawable/ic_clear_text"
                 app:layout_constraintEnd_toEndOf="@id/img_pic_in_new_note"
                 app:layout_constraintTop_toTopOf="@id/img_pic_in_new_note" />
 
@@ -136,14 +137,14 @@
 
             <ImageView
                 android:id="@+id/img_remove_url"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_delete"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_clear_text"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_web_url"
                 app:layout_constraintStart_toEndOf="@+id/tv_web_url"
                 app:layout_constraintTop_toTopOf="@+id/tv_web_url"
-                app:tint="@color/colorDelete" />
+                app:tint="@color/colorTextHint" />
 
 
             <!--            note content-->
@@ -153,6 +154,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
                 android:background="@null"
                 android:fontFamily="@font/ubuntu_regular"
                 android:hint="@string/content_hint"

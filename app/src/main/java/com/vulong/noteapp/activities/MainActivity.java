@@ -18,6 +18,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -86,7 +87,6 @@ public class MainActivity extends AppCompatActivity implements NoteAdapterListen
     private ImageView imgQuickAddImage;
     private LinearLayout layoutQuickAction;
     private AlertDialog enterUrlDialog;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

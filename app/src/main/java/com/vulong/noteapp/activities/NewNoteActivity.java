@@ -1,35 +1,26 @@
 package com.vulong.noteapp.activities;
 
-import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.InputType;
 import android.text.TextUtils;
-import android.util.Base64;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,16 +37,11 @@ import com.vulong.noteapp.R;
 import com.vulong.noteapp.database.NotesDatabase;
 import com.vulong.noteapp.entities.Note;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.regex.Pattern;
-
-import static android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
 
 public class NewNoteActivity extends AppCompatActivity {
     private static final String TAG = "test";
@@ -89,6 +75,8 @@ public class NewNoteActivity extends AppCompatActivity {
     private ImageView imgColor3;
     private ImageView imgColor4;
     private ImageView imgColor5;
+    private ImageView imgColor6;
+    private ImageView imgColor7;
 
 
     private static final int REQUEST_CODE_STORAGE_PERMISSION = 69;
@@ -113,7 +101,7 @@ public class NewNoteActivity extends AppCompatActivity {
         if (getIntent().getBooleanExtra("isQuickAddImg", false)) {
 
             try {
-                String imgPath=getIntent().getStringExtra("imgPath");
+                String imgPath = getIntent().getStringExtra("imgPath");
 
                 File file = new File(imgPath);
                 if (file.exists()) {
@@ -274,17 +262,19 @@ public class NewNoteActivity extends AppCompatActivity {
         imgColor3 = findViewById(R.id.view_color3);
         imgColor4 = findViewById(R.id.view_color4);
         imgColor5 = findViewById(R.id.view_color5);
+        imgColor6 = findViewById(R.id.view_color_new1);
+        imgColor7 = findViewById(R.id.view_color_new2);
 
         tvURL = findViewById(R.id.tv_web_url);
-
-        //init for bottom sheet fields
-        initBottomSheet();
 
         //init NOTE to update
         if (getIntent().getBooleanExtra("isUpdate", false)) {
             currentNote = (Note) getIntent().getSerializableExtra("note");
             setNoteToUpdate();
         }
+
+        //init for bottom sheet fields
+        initBottomSheet();
 
 
     }
@@ -318,6 +308,8 @@ public class NewNoteActivity extends AppCompatActivity {
             imgColor3.setImageResource(0);
             imgColor4.setImageResource(0);
             imgColor5.setImageResource(0);
+            imgColor6.setImageResource(0);
+            imgColor7.setImageResource(0);
 
             //set activity color
             CoordinatorLayout coordinatorLayout = findViewById(R.id.container_new_note);
@@ -338,6 +330,9 @@ public class NewNoteActivity extends AppCompatActivity {
             imgColor3.setImageResource(0);
             imgColor4.setImageResource(0);
             imgColor5.setImageResource(0);
+            imgColor6.setImageResource(0);
+            imgColor7.setImageResource(0);
+
 
             CoordinatorLayout coordinatorLayout = findViewById(R.id.container_new_note);
             coordinatorLayout.setBackgroundColor(getResources().getColor(R.color.colorNoteColor2));
@@ -356,6 +351,9 @@ public class NewNoteActivity extends AppCompatActivity {
             imgColor3.setImageResource(R.drawable.ic_done);
             imgColor4.setImageResource(0);
             imgColor5.setImageResource(0);
+            imgColor6.setImageResource(0);
+            imgColor7.setImageResource(0);
+
             CoordinatorLayout coordinatorLayout = findViewById(R.id.container_new_note);
             coordinatorLayout.setBackgroundColor(getResources().getColor(R.color.colorNoteColor3));
 
@@ -373,6 +371,9 @@ public class NewNoteActivity extends AppCompatActivity {
             imgColor3.setImageResource(0);
             imgColor4.setImageResource(R.drawable.ic_done);
             imgColor5.setImageResource(0);
+            imgColor6.setImageResource(0);
+            imgColor7.setImageResource(0);
+
             CoordinatorLayout coordinatorLayout = findViewById(R.id.container_new_note);
             coordinatorLayout.setBackgroundColor(getResources().getColor(R.color.colorNoteColor4));
 
@@ -390,6 +391,9 @@ public class NewNoteActivity extends AppCompatActivity {
             imgColor3.setImageResource(0);
             imgColor4.setImageResource(0);
             imgColor5.setImageResource(R.drawable.ic_done);
+            imgColor6.setImageResource(0);
+            imgColor7.setImageResource(0);
+
             CoordinatorLayout coordinatorLayout = findViewById(R.id.container_new_note);
             coordinatorLayout.setBackgroundColor(getResources().getColor(R.color.colorNoteColor5));
 
@@ -398,24 +402,74 @@ public class NewNoteActivity extends AppCompatActivity {
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.setStatusBarColor(this.getResources().getColor(R.color.colorNoteColor5));
         });
+        imgColor6.setOnClickListener(v -> {
+            selectColor = getResources().getColor(R.color.colorNoteColorNew1);
 
+            imgColor1.setImageResource(0);
+            imgColor2.setImageResource(0);
+            imgColor3.setImageResource(0);
+            imgColor4.setImageResource(0);
+            imgColor5.setImageResource(0);
+            imgColor6.setImageResource(R.drawable.ic_done);
+            imgColor7.setImageResource(0);
+
+            CoordinatorLayout coordinatorLayout = findViewById(R.id.container_new_note);
+            coordinatorLayout.setBackgroundColor(getResources().getColor(R.color.colorNoteColorNew1));
+
+            Window window = this.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(this.getResources().getColor(R.color.colorNoteColorNew1));
+        });
+        imgColor7.setOnClickListener(v -> {
+            selectColor = getResources().getColor(R.color.colorNoteColorNew2);
+
+            imgColor1.setImageResource(0);
+            imgColor2.setImageResource(0);
+            imgColor3.setImageResource(0);
+            imgColor4.setImageResource(0);
+            imgColor5.setImageResource(0);
+            imgColor6.setImageResource(0);
+            imgColor7.setImageResource(R.drawable.ic_done);
+
+            CoordinatorLayout coordinatorLayout = findViewById(R.id.container_new_note);
+            coordinatorLayout.setBackgroundColor(getResources().getColor(R.color.colorNoteColorNew2));
+
+            Window window = this.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(this.getResources().getColor(R.color.colorNoteColorNew2));
+        });
+
+        int color1 = getResources().getColor(R.color.colorDefaultNoteColor);
+        int color2 = getResources().getColor(R.color.colorNoteColor2);
+        int color3 = getResources().getColor(R.color.colorNoteColor3);
+        int color4 = getResources().getColor(R.color.colorNoteColor4);
+        int color5 = getResources().getColor(R.color.colorNoteColor5);
+        int color6 = getResources().getColor(R.color.colorNoteColorNew1);
+        int color7 = getResources().getColor(R.color.colorNoteColorNew2);
         if (currentNote != null) {
-            switch (currentNote.getColor()) {
-                case R.color.colorDefaultNoteColor:
-                    imgColor1.performClick();
-                    break;
-                case R.color.colorNoteColor2:
-                    imgColor2.performClick();
-                    break;
-                case R.color.colorNoteColor3:
-                    imgColor3.performClick();
-                    break;
-                case R.color.colorNoteColor4:
-                    imgColor4.performClick();
-                    break;
-                case R.color.colorNoteColor5:
-                    imgColor5.performClick();
-                    break;
+            int currentColor = currentNote.getColor();
+            if (currentColor == color1) {
+                imgColor1.performClick();
+            }
+            if (currentColor == color2) {
+                imgColor2.performClick();
+            }
+            if (currentColor == color3) {
+                imgColor3.performClick();
+            }
+            if (currentColor == color4) {
+                imgColor4.performClick();
+            }
+            if (currentColor == color5) {
+                imgColor5.performClick();
+            }
+            if (currentColor == color6) {
+                imgColor6.performClick();
+            }
+            if (currentColor == color7) {
+                imgColor7.performClick();
             }
         }
 

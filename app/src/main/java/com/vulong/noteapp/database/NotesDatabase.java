@@ -24,7 +24,7 @@ public abstract class NotesDatabase extends RoomDatabase {
             notesDatabase= Room.databaseBuilder(
                     context,
                     NotesDatabase.class,
-                    "notes_db"
+                    "note_app_db"
             ).build();
         }
         return  notesDatabase;
