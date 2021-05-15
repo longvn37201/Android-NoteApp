@@ -44,6 +44,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.vulong.noteapp.R;
 import com.vulong.noteapp.adapter.NoteAdapter;
 import com.vulong.noteapp.database.NotesDatabase;
@@ -98,20 +99,10 @@ public class MainActivity extends AppCompatActivity implements NoteAdapterListen
 
         //new note click
         imgNewNote.setOnClickListener(v -> {
-//            startActivityForResult(new Intent(this, NewNoteActivity.class),
-//                    REQUEST_CODE_ADD_NOTE);
-            findViewById(R.id.test).setVisibility(View.VISIBLE);
+            startActivityForResult(new Intent(this, NewNoteActivity.class),
+                    REQUEST_CODE_ADD_NOTE);
 
         });
-
-        imgNewNote.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                findViewById(R.id.test).setVisibility(View.GONE);
-
-            }
-        });
-
 
 
         //search note
@@ -129,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements NoteAdapterListen
             @Override
             public void afterTextChanged(Editable s) {
                 noteAdapter.getFilter().filter(s.toString().trim());
+                recyclerView.smoothScrollToPosition(0);
                 if (!s.toString().trim().isEmpty()) {
                     imgClearText.setVisibility(View.VISIBLE);
                 } else {
@@ -186,13 +178,17 @@ public class MainActivity extends AppCompatActivity implements NoteAdapterListen
             //hide filter with ""
             noteAdapter.getFilter().filter("");
 
+            //show all appbar
+            ((AppBarLayout)findViewById(R.id.appbarlayout)).setExpanded(true);
 
         });
 
         //exit search icon
         imgExitSearch.setOnClickListener(v -> {
+
             edtSearchNote.setText("");
             edtSearchNote.clearFocus();
+
             findViewById(R.id.layout_search_note).setVisibility(View.GONE);
             findViewById(R.id.layout_top).setVisibility(View.VISIBLE);
             layoutQuickAction.setVisibility(View.VISIBLE);
@@ -253,8 +249,6 @@ public class MainActivity extends AppCompatActivity implements NoteAdapterListen
 
                     noteAdapter.notifyItemInserted(0);
                     noteAdapter.notifyItemRangeChanged(0, noteAdapter.getItemCount());
-
-                    (findViewById(R.id.scrollView)).scrollTo(0, 0);
 
                     recyclerView.smoothScrollToPosition(0);
 
