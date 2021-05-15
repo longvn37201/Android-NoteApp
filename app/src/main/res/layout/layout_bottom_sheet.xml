@@ -17,8 +17,8 @@
         android:layout_height="50dp"
         android:fontFamily="@font/ubuntu_bold"
         android:gravity="center"
-        android:text="Thêm"
-        android:textColor="@color/white"
+        android:text="@string/more_feature"
+        android:textColor="@color/text"
         android:textSize="18sp" />
 
 <!--    pick color layout-->
@@ -103,8 +103,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/ubuntu_medium"
-            android:text="Thêm ảnh"
-            android:textColor="@color/white"
+            android:text="@string/add_img"
+            android:textColor="@color/text"
             android:layout_marginStart="10dp"
             android:textSize="16sp"
             />
@@ -131,8 +131,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/ubuntu_medium"
-            android:text="Thêm URL"
-            android:textColor="@color/white"
+            android:text="@string/add_url"
+            android:textColor="@color/text"
             android:layout_marginStart="10dp"
             android:textSize="16sp"
             />

@@ -12,6 +12,7 @@ import java.util.List;
 
 @Dao
 public interface NoteDAO {
+
     @Query("SELECT * FROM notes ORDER BY id DESC")
     List<Note> getAllNotes();
 

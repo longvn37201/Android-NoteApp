@@ -5,15 +5,19 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -29,12 +33,14 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.vulong.noteapp.R;
@@ -44,13 +50,18 @@ import com.vulong.noteapp.entities.Note;
 import com.vulong.noteapp.listeners.NoteAdapterListener;
 
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity implements NoteAdapterListener {
 
     private static final int REQUEST_CODE_ADD_NOTE = 69;
+    private static final int REQUEST_CODE_SETTING = 234;
 
     private static final int REQUEST_CODE_UPDATE_NOTE = 966;
     private static final int REQUEST_CODE_SHOW_ALL_NOTE = 1231246;
@@ -61,7 +72,6 @@ public class MainActivity extends AppCompatActivity implements NoteAdapterListen
     private Note noteClicked;
 
     private static final String TAG = "test";
-
 
     private RecyclerView recyclerView;
     private NoteAdapter noteAdapter;
@@ -78,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements NoteAdapterListen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initFields();
@@ -152,6 +163,8 @@ public class MainActivity extends AppCompatActivity implements NoteAdapterListen
 
 
     private void initFields() {
+
+//        imgOpenMenu = findViewById(R.id.img_option_menu);
         imgQuickAddImage = findViewById(R.id.img_quick_add_image);
         imgQuickAddLink = findViewById(R.id.img_quick_add_link);
         imgClearText = findViewById(R.id.img_clear_text);
@@ -166,7 +179,6 @@ public class MainActivity extends AppCompatActivity implements NoteAdapterListen
                         StaggeredGridLayoutManager.VERTICAL)
         );
         recyclerView.setAdapter(noteAdapter);
-
 
     }
 
@@ -216,10 +228,6 @@ public class MainActivity extends AppCompatActivity implements NoteAdapterListen
 
                 }
 
-//                Log.d(TAG, "mainnn: " + noteArrayList.toString());
-//                Log.d(TAG, "filter " + noteAdapter.getNoteListFiltered().toString());
-//                Log.d(TAG, "source " + noteAdapter.getNoteListSource().toString());
-
             }
         }
 
@@ -244,7 +252,6 @@ public class MainActivity extends AppCompatActivity implements NoteAdapterListen
             if (edtSearchNote.getText().toString().trim().isEmpty()) {
 
                 noteArrayList.remove(noteClickedPos);
-//            noteAdapter.notifyDataSetChanged();
                 noteAdapter.notifyItemRemoved(noteClickedPos);
                 noteAdapter.notifyItemRangeChanged(noteClickedPos, noteAdapter.getItemCount());
             } else {
@@ -254,21 +261,17 @@ public class MainActivity extends AppCompatActivity implements NoteAdapterListen
                 noteAdapter.getFilter().filter(edtSearchNote.getText().toString().trim());
 
             }
-
-//            Log.d(TAG, "mainnn: " + noteArrayList.toString());
-//            Log.d(TAG, "filter " + noteAdapter.getNoteListFiltered().toString());
-//            Log.d(TAG, "source " + noteAdapter.getNoteListSource().toString());
-
         }
 
         if (requestCode == REQUEST_CODE_PICK_IMAGE && resultCode == RESULT_OK) {
             Uri selectedImgUri = data.getData();
-            String imgPath= getPathFromURI(selectedImgUri);
+            String imgPath = getPathFromURI(selectedImgUri);
             Intent intent = new Intent(this, NewNoteActivity.class);
             intent.putExtra("isQuickAddImg", true);
             intent.putExtra("imgPath", imgPath);
             startActivityForResult(intent, REQUEST_CODE_ADD_NOTE);
         }
+
     }
 
     @Override
@@ -279,7 +282,6 @@ public class MainActivity extends AppCompatActivity implements NoteAdapterListen
 
         intent.putExtra("note", note);
         intent.putExtra("isUpdate", true);
-//        Log.d(TAG, "onNoteSelected: "+noteClickedPos);
         startActivityForResult(intent, REQUEST_CODE_UPDATE_NOTE);
 
     }
@@ -303,14 +305,11 @@ public class MainActivity extends AppCompatActivity implements NoteAdapterListen
 
         view.findViewById(R.id.tv_add_link).setOnClickListener(v -> {
             if (inputURL.getText().toString().trim().isEmpty()) {
-                Toast.makeText(this, "Vui lòng nhập URL", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "URL is not empty!!!", Toast.LENGTH_SHORT).show();
             } else if (!Patterns.WEB_URL.matcher(inputURL.getText().toString()).matches()) {
-                Toast.makeText(this, "URL không hợp lệ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Invalid url!!!", Toast.LENGTH_SHORT).show();
             } else {
-//                tvURL.setVisibility(View.VISIBLE);
-//                tvURL.setText(inputURL.getText().toString().trim());
-//                enterUrlDialog.dismiss();
-//                imgDeleteUrl.setVisibility(View.VISIBLE);
+
                 Intent intent = new Intent(this, NewNoteActivity.class);
                 intent.putExtra("isQuickAddUrl", true);
                 intent.putExtra("url", inputURL.getText().toString().trim());
@@ -334,7 +333,9 @@ public class MainActivity extends AppCompatActivity implements NoteAdapterListen
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startActivityQuickSelectImageNote();
             } else {
-                Toast.makeText(this, "VUI LÒNG CẤP QUYỀN TRUY CẬP BỘ NHỚ\nĐỂ THỰC HIỆN CHỨC NĂNG NÀY\n:((", Toast.LENGTH_LONG).show();
+                Toast.makeText(this,
+                        getString(R.string.please_accept_storage_per),
+                        Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -358,4 +359,7 @@ public class MainActivity extends AppCompatActivity implements NoteAdapterListen
 
         return picturePath;
     }
+
+
+
 }

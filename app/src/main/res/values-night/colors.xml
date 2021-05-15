@@ -6,19 +6,19 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="text">#FFFFFFFF</color>
 
 
-    <color name="colorPrimary">#292929</color>
+    <color name="colorPrimary">#FFF</color>
     <color name="colorPrimaryDark">#292929</color>
     <color name="colorAccent">#FDBE3B</color>
-    <color name="colorWhite">#FFFFFF</color>
-    <color name="colorSearchIcon">#DBDBDB</color>
-    <color name="colorTextHint">#7B7B7B</color>
-    <color name="colorQuickActionsBackground">#A92F2D2E</color>
-    <color name="colorIcons">#A4A4A4</color>
-    <color name="colorDefaultNoteColor">#333333</color>
-    <color name="colorBottomSheetBackground">#1F1F1F</color>
+    <color name="colorWhite">#000</color>
+    <color name="colorSearchIcon">#0c0c0c</color>
+    <color name="colorTextHint">#5f574f</color>
+    <color name="colorQuickActionsBackground">#dcdcdc</color>
+    <color name="colorIcons">#ababaa</color>
+    <color name="colorDefaultNoteColor">#dcdcdc</color>
+    <color name="colorBottomSheetBackground">#ababaa</color>
     <color name="colorNoteColor2">#FDBE3B</color>
     <color name="colorNoteColor3">#FF4842</color>
     <color name="colorNoteColor4">#3A52Fc</color>

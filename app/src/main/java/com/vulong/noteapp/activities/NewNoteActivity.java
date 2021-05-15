@@ -163,7 +163,7 @@ public class NewNoteActivity extends AppCompatActivity {
     private void setNoteToUpdate() {
         edtTitle.setText(currentNote.getTitle());
         edtContent.setText(currentNote.getContent());
-        tvDatetime.setText("Lần sửa cuối: " + currentNote.getDateTime());
+        tvDatetime.setText(getString(R.string.last_edit) + currentNote.getDateTime());
         try {
             File file = new File(currentNote.getImagePath());
             if (file.exists()) {
@@ -194,7 +194,7 @@ public class NewNoteActivity extends AppCompatActivity {
         String title = edtTitle.getText().toString().trim();
         String content = edtContent.getText().toString().trim();
         if (TextUtils.isEmpty(title)) {
-            Toast.makeText(this, "Vui lòng điền tiêu đề", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter title!!!", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -203,7 +203,7 @@ public class NewNoteActivity extends AppCompatActivity {
         note.setTitle(title);
         note.setContent(content);
         note.setDateTime(
-                new SimpleDateFormat("EEE, dd MMM yyyy HH:mm a",
+                new SimpleDateFormat("dd MMM, HH:mm a",
                         Locale.getDefault()).format(new Date())
         );
         note.setColor(selectColor);
@@ -264,7 +264,7 @@ public class NewNoteActivity extends AppCompatActivity {
 
         //set current time
         tvDatetime.setText(
-                new SimpleDateFormat("EEE, dd MMM yyyy HH:mm a", Locale.getDefault())
+                new SimpleDateFormat("dd MMM, HH:mm a", Locale.getDefault())
                         .format(new Date())
         );
 
@@ -472,7 +472,9 @@ public class NewNoteActivity extends AppCompatActivity {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startActivitySelectImageNote();
             } else {
-                Toast.makeText(this, "VUI LÒNG CẤP QUYỀN TRUY CẬP BỘ NHỚ\nĐỂ THỰC HIỆN CHỨC NĂNG NÀY\n:((", Toast.LENGTH_LONG).show();
+                Toast.makeText(this,
+                        getString(R.string.please_accept_storage_per),
+                        Toast.LENGTH_LONG).show();
             }
         }
     }
