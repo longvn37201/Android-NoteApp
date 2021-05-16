@@ -17,6 +17,7 @@
         tools:targetApi="q">
         <activity
             android:name=".activities.NewNoteActivity"
+            android:windowSoftInputMode="adjustResize"
             android:configChanges="uiMode" />
         <activity
             android:name=".activities.MainActivity"
