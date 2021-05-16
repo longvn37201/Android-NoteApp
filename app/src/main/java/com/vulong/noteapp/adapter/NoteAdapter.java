@@ -14,11 +14,13 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.vulong.noteapp.R;
 import com.vulong.noteapp.entities.Note;
 import com.vulong.noteapp.listeners.NoteAdapterListener;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> implements Filterable {
@@ -139,16 +141,23 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> im
             tvTitle.setText(note.getTitle());
             tvContent.setText(note.getContent());
             tvDateTime.setText(note.getDateTime());
-//        constraintLayout.setBackgroundT(note.getColor());
             constraintLayout.getBackground().setColorFilter(note.getColor(), PorterDuff.Mode.SRC_ATOP);
+            if(note.getImagePath()!=null){
+                try {
+                    File file = new File(note.getImagePath());
+                    if (file.exists()) {
+                        Glide.with(imgImage.getContext()).load(note.getImagePath()).into(imgImage);
+                    }else{
+                        imgImage.setVisibility(View.GONE);
+                    }
+                } catch (Exception e) {
+//                //lost path
+                    imgImage.setVisibility(View.GONE);
 
-
-            try {
-                imgImage.setImageBitmap(BitmapFactory.decodeFile(note.getImagePath()));
-            } catch (Exception e) {
-                //lost path
-                imgImage.setVisibility(View.GONE);
+                }
             }
+
+
         }
     }
 

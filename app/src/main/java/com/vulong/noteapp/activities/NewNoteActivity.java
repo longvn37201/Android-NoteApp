@@ -32,6 +32,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.vulong.noteapp.R;
 import com.vulong.noteapp.database.NotesDatabase;
@@ -105,7 +106,9 @@ public class NewNoteActivity extends AppCompatActivity {
 
                 File file = new File(imgPath);
                 if (file.exists()) {
-                    imgImageNote.setImageBitmap(BitmapFactory.decodeFile(imgPath));
+//                    imgImageNote.setImageBitmap(BitmapFactory.decodeFile(imgPath));
+                    Glide.with(this).load(imgPath).into(imgImageNote);
+
                     selectImage = imgPath;
                     imgDeleteImage.setVisibility(View.VISIBLE);
 
@@ -155,12 +158,14 @@ public class NewNoteActivity extends AppCompatActivity {
         try {
             File file = new File(currentNote.getImagePath());
             if (file.exists()) {
-                imgImageNote.setImageBitmap(BitmapFactory.decodeFile(currentNote.getImagePath()));
+
                 selectImage = currentNote.getImagePath();
+                Glide.with(this).load(selectImage).into(imgImageNote);
                 imgDeleteImage.setVisibility(View.VISIBLE);
 
             }
         } catch (Exception e) {
+
         }
 
         if (currentNote.getWebLink() != null && !currentNote.getWebLink().trim().isEmpty()) {
@@ -542,13 +547,16 @@ public class NewNoteActivity extends AppCompatActivity {
             Uri selectedImgUri = data.getData();
 
             try {
-                InputStream imageStream = getContentResolver().openInputStream(selectedImgUri);
-                Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
-                imgImageNote.setImageBitmap(bitmap);
+//                InputStream imageStream = getContentResolver().openInputStream(selectedImgUri);
+//                Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
+//                imgImageNote.setImageBitmap(bitmap);
+
 
                 //convert image bitmap to string
                 selectImage = getPathFromURI(selectedImgUri);
 
+                //render with glide
+                Glide.with(this).load(selectImage).into(imgImageNote);
 
                 imgImageNote.setVisibility(View.VISIBLE);
                 imgDeleteImage.setVisibility(View.VISIBLE);

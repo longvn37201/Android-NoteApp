@@ -12,10 +12,15 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_app_round"
         android:supportsRtl="true"
+
         android:theme="@style/Theme.NoteApp"
         tools:targetApi="q">
-        <activity android:name=".activities.NewNoteActivity" />
-        <activity android:name=".activities.MainActivity">
+        <activity
+            android:name=".activities.NewNoteActivity"
+            android:configChanges="uiMode" />
+        <activity
+            android:name=".activities.MainActivity"
+            android:configChanges="uiMode">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

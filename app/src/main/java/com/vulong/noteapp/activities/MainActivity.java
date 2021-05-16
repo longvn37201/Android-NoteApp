@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements NoteAdapterListen
     private LinearLayout layoutQuickAction;
     private AlertDialog enterUrlDialog;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
