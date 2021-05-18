@@ -14,6 +14,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -21,6 +22,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,6 +68,7 @@ public class NewNoteActivity extends AppCompatActivity {
     private AlertDialog enterUrlDialog;
     // delete note confirm dialog
     private AlertDialog confirmDeleteNote;
+    private AlertDialog confirmOpenUrlDialog;
 
     //for save ROOM database
     private int selectColor;
@@ -145,11 +148,16 @@ public class NewNoteActivity extends AppCompatActivity {
 
         //delete note
         imgDeleteNote.setOnClickListener(v -> {
-            performConfirmDeleteNoteialog();
+            performConfirmDeleteNoteDialog();
         });
 
+        //open link
+        tvURL.setOnClickListener(v -> {
+            perFormConfirmOpenLinkDialog();
+        });
 
     }
+
 
     private void setNoteToUpdate() {
         edtTitle.setText(currentNote.getTitle());
@@ -619,7 +627,7 @@ public class NewNoteActivity extends AppCompatActivity {
 
     }
 
-    private void performConfirmDeleteNoteialog() {
+    private void performConfirmDeleteNoteDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = LayoutInflater.from(this).inflate(
                 R.layout.layout_delete_note,
@@ -660,6 +668,38 @@ public class NewNoteActivity extends AppCompatActivity {
         view.findViewById(R.id.tv_cancel_delete).setOnClickListener(v -> confirmDeleteNote.dismiss());
 
         confirmDeleteNote.show();
+    }
+
+    private void perFormConfirmOpenLinkDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = LayoutInflater.from(this).inflate(
+                R.layout.layout_confirm_open_link,
+                null
+        );
+        builder.setView(view);
+
+        confirmOpenUrlDialog = builder.create();
+
+        if (confirmOpenUrlDialog.getWindow() != null) {
+            confirmOpenUrlDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        }
+
+        TextView link = view.findViewById(R.id.tv_display_link_to_open);
+        TextView tvUrlInNoteAtv = findViewById(R.id.tv_web_url);
+
+        link.setText(tvUrlInNoteAtv.getText().toString());
+//        link.setTextColor(Color.BLUE);
+
+        view.findViewById(R.id.tv_confirm_open_link).setOnClickListener(v -> {
+            Uri uri = Uri.parse(link.getText().toString());
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
+            confirmOpenUrlDialog.dismiss();
+        });
+
+        view.findViewById(R.id.tv_cancel_open_link).setOnClickListener(v -> confirmOpenUrlDialog.dismiss());
+
+        confirmOpenUrlDialog.show();
     }
 
 }

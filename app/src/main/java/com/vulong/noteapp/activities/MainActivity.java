@@ -91,12 +91,19 @@ public class MainActivity extends AppCompatActivity implements NoteAdapterListen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         initFields();
 
-        getNote(REQUEST_CODE_SHOW_ALL_NOTE);
+        recyclerView.setLayoutManager(
+                new StaggeredGridLayoutManager(2,
+                        StaggeredGridLayoutManager.VERTICAL)
+        );
+        recyclerView.setAdapter(noteAdapter);
+
+        //get all note from db
+        getDataAndUpdateRecyclerView(REQUEST_CODE_SHOW_ALL_NOTE);
 
         //new note click
         imgNewNote.setOnClickListener(v -> {
@@ -104,7 +111,6 @@ public class MainActivity extends AppCompatActivity implements NoteAdapterListen
                     REQUEST_CODE_ADD_NOTE);
 
         });
-
 
         //search note
         edtSearchNote.addTextChangedListener(new TextWatcher() {
@@ -180,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements NoteAdapterListen
             noteAdapter.getFilter().filter("");
 
             //show all appbar
-            ((AppBarLayout)findViewById(R.id.appbarlayout)).setExpanded(true);
+            ((AppBarLayout) findViewById(R.id.appbarlayout)).setExpanded(true);
 
         });
 
@@ -205,7 +211,6 @@ public class MainActivity extends AppCompatActivity implements NoteAdapterListen
 
 
     private void initFields() {
-
         imgExitSearch = findViewById(R.id.img_exit_search_layout);
         imgIconSearch = findViewById(R.id.img_icon_search);
         imgQuickAddImage = findViewById(R.id.img_quick_add_image);
@@ -217,17 +222,9 @@ public class MainActivity extends AppCompatActivity implements NoteAdapterListen
         noteArrayList = new ArrayList<>();
         noteAdapter = new NoteAdapter(noteArrayList, this);
         recyclerView = findViewById(R.id.recyclerview_note_list);
-        recyclerView.setLayoutManager(
-                new StaggeredGridLayoutManager(2,
-                        StaggeredGridLayoutManager.VERTICAL)
-        );
-        recyclerView.setAdapter(noteAdapter);
-
     }
 
-    private void getNote(int reqCode) {
-
-
+    private void getDataAndUpdateRecyclerView(int reqCode) {
         @SuppressLint("StaticFieldLeak")
         class GetNoteTask extends AsyncTask<Void, Void, List<Note>> {
 
@@ -237,36 +234,31 @@ public class MainActivity extends AppCompatActivity implements NoteAdapterListen
             }
 
             @Override
-            protected void onPostExecute(List<Note> notes) {
-                super.onPostExecute(notes);
+            protected void onPostExecute(List<Note> resultNotes) {
+                super.onPostExecute(resultNotes);
+
                 if (reqCode == REQUEST_CODE_SHOW_ALL_NOTE) {
-                    noteArrayList.addAll(notes);
+                    noteArrayList.addAll(resultNotes);
                     noteAdapter.notifyDataSetChanged();
-
-
                 }
-                if (reqCode == REQUEST_CODE_ADD_NOTE) {
-                    noteArrayList.add(0, notes.get(0));
 
+                if (reqCode == REQUEST_CODE_ADD_NOTE) {
+                    noteArrayList.add(0, resultNotes.get(0));
                     noteAdapter.notifyItemInserted(0);
                     noteAdapter.notifyItemRangeChanged(0, noteAdapter.getItemCount());
-
                     recyclerView.smoothScrollToPosition(0);
-
                 }
 
                 if (reqCode == REQUEST_CODE_UPDATE_NOTE) {
                     if (findViewById(R.id.layout_search_note).getVisibility() == View.GONE) {
                         noteArrayList.remove(noteClickedPos);
-                        noteArrayList.add(noteClickedPos, notes.get(noteClickedPos));
+                        noteArrayList.add(noteClickedPos, resultNotes.get(noteClickedPos));
                         noteAdapter.notifyItemChanged(noteClickedPos);
                     } else {
-                        noteArrayList = (ArrayList<Note>) notes;
-                        noteAdapter.setNoteListSource((ArrayList<Note>) notes);
+                        noteArrayList = (ArrayList<Note>) resultNotes;
+                        noteAdapter.setNoteListSource((ArrayList<Note>) resultNotes);
                         noteAdapter.getFilter().filter(edtSearchNote.getText().toString().trim());
-
                     }
-
                 }
 
             }
@@ -280,23 +272,21 @@ public class MainActivity extends AppCompatActivity implements NoteAdapterListen
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CODE_ADD_NOTE && resultCode == RESULT_OK) {
-            getNote(REQUEST_CODE_ADD_NOTE);
+            getDataAndUpdateRecyclerView(REQUEST_CODE_ADD_NOTE);
         }
 
         if (requestCode == REQUEST_CODE_UPDATE_NOTE && resultCode == RESULT_OK) {
             if (data != null) {
-                getNote(REQUEST_CODE_UPDATE_NOTE);
+                getDataAndUpdateRecyclerView(REQUEST_CODE_UPDATE_NOTE);
             }
         }
 
         if (requestCode == REQUEST_CODE_UPDATE_NOTE && resultCode == NewNoteActivity.RESULT_DELETE) {
             if (edtSearchNote.getText().toString().trim().isEmpty()) {
-
                 noteArrayList.remove(noteClickedPos);
                 noteAdapter.notifyItemRemoved(noteClickedPos);
                 noteAdapter.notifyItemRangeChanged(noteClickedPos, noteAdapter.getItemCount());
             } else {
-
                 noteArrayList.remove(noteClicked);
                 noteAdapter.setNoteListSource(noteArrayList);
                 noteAdapter.getFilter().filter(edtSearchNote.getText().toString().trim());

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_dialog"
+    android:layout_gravity="center"
+    android:layout_margin="10dp"
+    android:padding="10dp"
+    android:id="@+id/layout_add_link_container"
+    >
+
+    <ImageView
+        android:id="@+id/img_icon_open_link"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/ic_quick_add_link"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/tv_display_link_to_open"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="sadadadsad"
+        app:layout_constraintStart_toEndOf="@id/img_icon_open_link"
+        app:layout_constraintTop_toTopOf="@+id/img_icon_open_link"
+        app:layout_constraintBottom_toBottomOf="@id/img_icon_open_link"
+        android:textColor="@color/text"
+        android:fontFamily="@font/ubuntu_regular"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:textSize="18sp"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        />
+
+    <TextView
+        android:id="@+id/tv_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        app:layout_constraintTop_toBottomOf="@id/img_icon_open_link"
+        android:text="@string/confirm_open_link_message"
+        android:textColorHint="@color/colorTextHint"
+        android:textSize="15sp"
+        android:textColor="@color/text"
+        android:gravity="center_vertical"
+        android:background="@null"
+        android:layout_margin="10dp"
+        android:paddingLeft="5dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_confirm_open_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/tv_message"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/ok"
+        android:textColor="@color/colorAccent"
+        android:padding="10dp"
+        android:textSize="16sp"
+        android:fontFamily="@font/ubuntu_medium"
+        />
+    <TextView
+        android:id="@+id/tv_cancel_open_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/tv_message"
+        app:layout_constraintEnd_toStartOf="@+id/tv_confirm_open_link"
+        android:text="@string/cancel_delete"
+        android:textColor="@color/colorAccent"
+        android:padding="10dp"
+        android:textSize="16sp"
+        android:fontFamily="@font/ubuntu_medium"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

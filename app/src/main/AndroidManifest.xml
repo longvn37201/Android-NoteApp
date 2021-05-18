@@ -16,10 +16,12 @@
         android:theme="@style/Theme.NoteApp"
         tools:targetApi="q">
         <activity
+            android:screenOrientation="portrait"
             android:name=".activities.NewNoteActivity"
             android:windowSoftInputMode="adjustResize"
             android:configChanges="uiMode" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".activities.MainActivity"
             android:configChanges="uiMode">
             <intent-filter>

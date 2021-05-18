@@ -26,7 +26,6 @@ public class Note implements Serializable {
     @ColumnInfo(name = "image_path")
     private String imagePath;
 
-
     @ColumnInfo(name = "color")
     private int color;
 
